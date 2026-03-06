@@ -1,290 +1,128 @@
-Sales Performance & Customer Intelligence Analysis
+# Sales Performance & Customer Intelligence Analysis
 
-Project Objective
+An end-to-end data analytics project that explores sales trends, customer behavior, cross-selling opportunities, and revenue forecasting using Python and machine learning.
 
-The goal of this project is to analyze sales performance across products, countries, customers, and time to uncover strategic insights and predict future outcomes.
+## Business Problem
 
-The analysis integrates:
+Businesses often struggle to understand how sales performance changes across products, customers, and regions. Without clear insights, it becomes difficult to:
 
-Data cleaning & enrichment
+- Identify high-value customers
+- Optimize pricing strategies
+- Improve cross-selling opportunities
+- Predict future sales demand
 
-Time-series analysis
+This project analyzes historical sales data to uncover actionable insights and build predictive models for strategic decision making.
 
-Sales forecasting
+## Dataset
 
-Market basket analysis
+The dataset contains **2,823 order-line transactions** with **25 columns**.
 
-Customer segmentation (RFM)
+Each row represents a **single product within an order**.
 
-Machine learning models
+Key features include:
 
-🔹 Step 1: Data Loading & Initial Inspection
-Environment Setup
+- Order Date
+- Product Line
+- Customer Name
+- Country / City / Territory
+- Quantity Ordered
+- Price Each
+- MSRP
+- Deal Size
+- Sales
 
-Imported essential Python libraries:
+## Project Workflow
 
-pandas
+1. Data Cleaning & Preprocessing
+2. Exploratory Data Analysis
+3. Time-Series Sales Analysis
+4. Sales Forecasting
+5. Market Basket Analysis
+6. Customer Segmentation (RFM)
+7. Pricing & Discount Analysis
+8. Machine Learning Model
+9. Operational Risk Assessment
 
-numpy
+## Key Insights
 
-matplotlib
+• Strong seasonal sales spikes occur in **Q4**, especially in **November**.
 
-sklearn
+• Market basket analysis discovered strong cross-selling relationships between product lines, with lift values as high as **5.9**.
 
-statsmodels
+• Customer segmentation identified a small group of **high-value "Champion" customers driving a large portion of revenue**.
 
-Handling Encoding
+• Pricing analysis revealed **revenue leakage caused by excessive discounts** in certain product categories.
 
-The dataset sales_data_sample.csv was loaded using:
+• Sales forecasting predicts **continued seasonal demand peaks**, allowing better inventory planning.
 
-encoding='latin1'
+## Machine Learning Models
 
-This resolves decoding errors common in transactional datasets.
+Two predictive models were developed:
 
-Structural Review
+### Sales Forecasting
+- Model: Holt-Winters Exponential Smoothing
+- Captures trend and seasonality
+- Forecasts future monthly revenue
 
-Dataset size: 2,823 rows × 25 columns
+### Deal Size Classification
+- Model: Random Forest Classifier
+- Accuracy: 88.3%
+- Most important feature: PriceEach (57%)
 
-Data granularity: Order-line level
+## Tech Stack
 
-Each row represents a single product within an order, not the full order.
-
-🔹 Step 2: Comprehensive Data Cleaning
-Fixing "NA" Interpretation
-
-The value "NA" (North America) was incorrectly interpreted as a null value in the TERRITORY column.
-
-This was corrected to preserve geographic data.
-
-Text Standardization
-
-Removed extra whitespace from:
-
-CITY
-
-STATE
-
-Geographic Enrichment
-
-Several improvements were applied:
-
-Standardized state names
-
-Example: "NY" → "New York"
-
-Corrected city spelling inconsistencies
-
-Filled 1,486 missing STATE values
-
-Mapping logic used:
-
-CITY + COUNTRY → STATE
-Territory Integrity
-
-Territory mapping was standardized to avoid duplication.
-
-Example:
-
-Ensured Singapore consistently maps to the same territory to prevent revenue duplication.
-
-🔹 Step 3: Time-Series Transformation
-Datetime Conversion
-
-The ORDERDATE column was converted from object format to datetime format.
-
-Growth Metrics Calculated
-
-Month-on-Month (MoM)
-
-Quarter-on-Quarter (QoQ)
-
-Year-over-Year (YoY)
-
-Like-for-Like Growth
-
-Since 2005 contains partial-year data, growth calculations were adjusted to ensure fair comparison with full years.
-
-🔹 Step 4: Sales Forecasting
-Model Used
-
-Holt-Winters Exponential Smoothing from statsmodels.
-
-Model Configuration
-
-Trend: Additive
-
-Seasonality: Multiplicative
-
-Seasonal period: 12 months
-
-Forecast Insight
-
-The model identifies strong seasonal demand.
-
-Example:
-
-November 2005 forecast revenue > $1.7M
-
-🔹 Step 5: Market Basket Analysis
-Data Preparation
-
-Created a binary basket matrix:
-
-Order Number × Product Line
-
-Each cell indicates whether the product line appeared in the order.
-
-Algorithm Used
-
+Python  
+Pandas  
+NumPy  
+Matplotlib  
+Scikit-learn  
+Statsmodels  
 Apriori Algorithm
 
-Minimum Support: 5%
+## Project Structure
 
-Metrics Calculated
+sales-analytics-project
+│
+├── data
+│   └── sales_data_sample.csv
+│
+├── notebooks
+│   └── Retail Store Sales & Customer Analytics (Exploratory + Predictive).ipynb
+│
+├── visuals
+│   └── powerbi.pbix (Coming Soon)
+│
+└── README.md
 
-Support
+## How to Run
 
-Confidence
+1. Clone the repository
 
-Lift
+git clone https://github.com/yourusername/sales-analytics-project
 
-Key Insight
+2. Install dependencies
 
-Strong product affinity discovered:
+pip install -r requirements.txt
 
-Classic Cars + Ships → Vintage Cars + Trains
-Lift = 5.9x
+3. Run the notebook
 
-Customers buying these items are 5.9× more likely to purchase the associated products.
+jupyter notebook
 
-Revenue Uplift Simulation
+## Future Improvements
 
-Simulated 10% cross-sell conversion improvement.
+• Deploy forecasting model into a dashboard  
+• Add customer lifetime value (CLV) modeling  
+• Build an interactive Power BI dashboard  
+• Implement automated reporting pipeline
 
-Estimated Total Revenue Uplift: 4.33%
+## 👤 Author
 
-🔹 Step 6: Customer Intelligence (RFM Analysis)
-Metrics Calculated
+**Shib Paul**
 
-For 92 customers:
+Sales Performance Analyst passionate about solving business problems using data analytics, machine learning, and visualization.
 
-Recency – Days since last purchase
+📧 Email: shibsankarpaul.analyst@gmail.com  
 
-Frequency – Total unique orders
+💼 LinkedIn: https://www.linkedin.com/in/shibsankarpaulanalyst/
 
-Monetary – Total customer spending
-
-Customer Segmentation
-
-Customers were grouped into:
-
-Champions
-
-Potential Loyalists
-
-At Risk
-
-Lost
-
-Churn Prediction
-
-A Logistic Regression model was built to estimate customer churn probability using RFM scores.
-
-🔹 Step 7: Pricing & Margin Analysis
-Discount Calculation
-Discount % = (MSRP − PriceEach) / MSRP
-Elasticity Analysis
-
-Correlation analysis was performed between:
-
-Discount levels
-
-Quantity ordered
-
-This helps evaluate price sensitivity.
-
-Revenue Leakage Simulation
-
-Analysis found revenue leakage in the Classic Cars product line.
-
-Simulation showed:
-
-Reducing discounts by 5% could significantly improve margins.
-
-🔹 Step 8: Machine Learning – Deal Size Classification
-Algorithm
-
-Random Forest Classifier
-
-Target Variable
-DEALSIZE (Small, Medium, Large)
-Preprocessing
-
-Label Encoding for categorical variables
-
-Train-test split
-
-Model Performance
-
-Accuracy: 88.3%
-
-Feature Importance
-
-Most influential feature:
-
-PRICEEACH → 57% importance
-
-Deal size is primarily driven by product pricing.
-
-🔹 Step 9: Operational Risk Assessment
-Order Success Rate
-Order Success Rate = 94.46%
-
-Calculated by excluding non-fulfilled order statuses.
-
-Revenue at Risk
-
-Orders with status:
-
-On Hold
-
-In Process
-
-represent potential revenue risk.
-
-Total Revenue at Risk: $323,709
-📈 Key Business Outcomes
-
-This analysis enables businesses to:
-
-Improve cross-selling strategies
-
-Forecast future sales demand
-
-Identify high-value customers
-
-Optimize pricing strategies
-
-Reduce operational revenue risk
-
-Support data-driven decision making
-
-🛠️ Tools & Technologies
-
-Python
-
-Pandas
-
-NumPy
-
-Matplotlib
-
-Scikit-learn
-
-Statsmodels
-
-Apriori Algorithm
-
-Presentation link: https://youtu.be/QXCYoVx5e9k
-
-LinkedIn Profile: https://www.linkedin.com/in/shibsankarpaulanalyst/
+📊 Project Presentation: https://youtu.be/QXCYoVx5e9k
