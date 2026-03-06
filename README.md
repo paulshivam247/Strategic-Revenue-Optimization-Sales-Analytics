@@ -284,3 +284,7 @@ Scikit-learn
 Statsmodels
 
 Apriori Algorithm
+
+Presentation link: https://youtu.be/QXCYoVx5e9k
+
+LinkedIn Profile: https://www.linkedin.com/in/shibsankarpaulanalyst/
