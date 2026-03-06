@@ -1,4 +1,5 @@
 Sales Performance & Customer Intelligence Analysis
+
 Project Objective
 
 The goal of this project is to analyze sales performance across products, countries, customers, and time to uncover strategic insights and predict future outcomes.
